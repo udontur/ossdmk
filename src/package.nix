@@ -1,5 +1,3 @@
-# github@NixOS:nixpkgs/pkgs/by-name/os/ossdmk/package.nix
-
 {
   lib,
   stdenv,
@@ -8,13 +6,13 @@
 
 stdenv.mkDerivation rec {
   pname = "ossdmk";
-  version = "1.0.2";
+  version = "1.0.0";
 
   src = fetchFromGitHub {
     owner = "udontur";
     repo = "ossdmk";
     tag = "v${version}";
-    hash = "sha256-QF3VJHxkw4K4BjpaL0+OA02cU9mSpLQkI70kBgxkGH0=";
+    hash = "sha256-gWOPkOehSK64XO4hwRKTXjlSkkV/jhhUFlUCb0goEN4=";
   };
 
   installPhase = ''
@@ -29,6 +27,6 @@ stdenv.mkDerivation rec {
     license = lib.licenses.mit;
     maintainers = with lib.maintainers; [ udontur ];
     mainProgram = "ossdmk";
-    platforms = lib.platforms.linux;
+    platforms = lib.intersectLists lib.platforms.linux lib.platforms.x86;
   };
 }
