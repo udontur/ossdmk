@@ -23,6 +23,8 @@ environment.systemPackages = with pkgs; [
 ];
 ```
 
+nix shell github:udontur/ossdmk -c ossdmk
+
 ## 🔧 Usage
 Enter ```ossdmk``` in the terminal.
 > [!NOTE]

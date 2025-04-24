@@ -16,10 +16,10 @@
             g++ ./src/main.cpp -o ossdmk
           '';
           installPhase = ''
-            runHook preInstall
-            install -Dm755 ./ossdmk $out/bin/ossdmk
-            runHook postInstall
+            mkdir -p $out/bin
+            install -D ./ossdmk $out/bin/ossdmk
           '';
         };
     };
 }
+
