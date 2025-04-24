@@ -1,0 +1,25 @@
+{
+  description = "A flake for building Hello World";
+  inputs.nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+  outputs =
+    { self, nixpkgs }:
+    {
+      defaultPackage.x86_64-linux =
+        # Notice the reference to nixpkgs here.
+        with import nixpkgs {
+          system = "x86_64-linux";
+        };
+        stdenv.mkDerivation {
+          name = "ossdmk";
+          src = self;
+          buildPhase = ''
+            g++ ./src/main.cpp -o ossdmk
+          '';
+          installPhase = ''
+            runHook preInstall
+            install -Dm755 ./ossdmk $out/bin/ossdmk
+            runHook postInstall
+          '';
+        };
+    };
+}
