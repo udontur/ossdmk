@@ -1,33 +1,53 @@
 {
-  description = "A flake for building Hello World";
-  inputs.nixpkgs.url = "github:nixos/nixpkgs?ref=nixos-unstable";
-  outputs = { 
-    self, nixpkgs 
-  }:
-    let
-      systems = ["x86_64-linux"];
-    forAllSystems = f:
-      nixpkgs.lib.genAttrs systems (system:
-        f {
-          pkgs = import nixpkgs {inherit system;};
-        });
-    in {
-      packages = forAllSystems ({pkgs}: {
-        default = pkgs.stdenv.mkDerivation {
-          name = "ossdmk";
-          pname="ossdmk";
-          src = self;
-          buildPhase = ''
-            g++ ./src/main.cpp -o ossdmk
-          '';
-          installPhase = ''
-            mkdir -p $out/bin
-            install -D ./ossdmk $out/bin/ossdmk
-          '';
-        };
-      });
+  inputs = {
+    nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-unstable";
+    prog_src = {
+      flake = false;
+      url = "github:udontur/ossdmk";
     };
+  };
+  outputs = {self, nixpkgs, ...}@inputs: let
+    forAllSys = nixpkgs.lib.genAttrs nixpkgs.lib.platforms.all;
+  in {
+    packages = forAllSys (system: let
+      pkgs = import nixpkgs { inherit system; };
+      ossdmk = pkgs.callPackage ./. {
+        inherit (inputs) prog_src;
+      };
+    in {
+      default = ossdmk;
+    });
+  };
 }
+
+
+# {
+#   description = "A flake for building Hello World";
+#   inputs.nixpkgs.url = "github:nixos/nixpkgs?ref=nixos-unstable";
+#   outputs = { 
+#     self, nixpkgs 
+#   }:
+#     let
+#       systems = ["x86_64-linux"];
+#       pkgs = import nixpkgs { inherit systems; };
+#     in {
+#       packages = {
+#         default = pkgs.stdenv.mkDerivation {
+#           name = "ossdmk";
+#           pname="ossdmk";
+#           version = "1.0.0";
+#           src = self;
+#           buildPhase = ''
+#             g++ ./src/main.cpp -o ossdmk
+#           '';
+#           installPhase = ''
+#             mkdir -p $out/bin
+#             install -D ./ossdmk $out/bin/ossdmk
+#           '';
+#         };
+#       };
+#     };
+# }
 
 # {
 #   description = "Manage NetworkManager connections with dmenu/rofi/wofi instead of nm-applet";
