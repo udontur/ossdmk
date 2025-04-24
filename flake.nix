@@ -1,16 +1,21 @@
 {
   description = "A flake for building Hello World";
   inputs.nixpkgs.url = "github:nixos/nixpkgs?ref=nixos-unstable";
-  outputs =
-    { self, nixpkgs }:
-    {
-      defaultPackage.x86_64-linux =
-        # Notice the reference to nixpkgs here.
-        with import nixpkgs {
-          system = "x86_64-linux";
-        };
-        stdenv.mkDerivation {
+  outputs = { 
+    self, nixpkgs 
+  }:
+    let
+      systems = ["x86_64-linux"];
+    forAllSystems = f:
+      nixpkgs.lib.genAttrs systems (system:
+        f {
+          pkgs = import nixpkgs {inherit system;};
+        });
+    in {
+      packages = forAllSystems ({pkgs}: {
+        default = pkgs.stdenv.mkDerivation {
           name = "ossdmk";
+          pname="ossdmk";
           src = self;
           buildPhase = ''
             g++ ./src/main.cpp -o ossdmk
@@ -20,6 +25,88 @@
             install -D ./ossdmk $out/bin/ossdmk
           '';
         };
+      });
     };
 }
 
+# {
+#   description = "Manage NetworkManager connections with dmenu/rofi/wofi instead of nm-applet";
+
+#   inputs = {
+#     nixpkgs.url = "github:NixOS/nixpkgs";
+#   };
+
+#   outputs = {
+#     self,
+#     nixpkgs,
+#   }: let
+#     systems = ["x86_64-linux"];
+#     forAllSystems = f:
+#       nixpkgs.lib.genAttrs systems (system:
+#         f {
+#           pkgs = import nixpkgs {inherit system;};
+#         });
+#   in {
+#     devShells = forAllSystems ({pkgs}: {
+#       default = pkgs.mkShell {
+#         packages = builtins.attrValues {
+#           inherit
+#             (pkgs)
+#             glib
+#             gobject-introspection
+#             networkmanager
+#             ;
+#           inherit
+#             (pkgs.python3Packages)
+#             python
+#             pygobject3
+#             ;
+#         };
+#       };
+#     });
+#     packages = forAllSystems ({pkgs}: {
+#       default = pkgs.stdenv.mkDerivation {
+#         name = "networkmanager_dmenu";
+#         pname = "networkmanager_dmenu";
+#         dontBuild = true;
+#         src = ./.;
+#         buildInputs = builtins.attrValues {
+#           inherit
+#             (pkgs)
+#             glib
+#             gobject-introspection
+#             networkmanager
+#             ;
+#           inherit
+#             (pkgs.python3Packages)
+#             python
+#             pygobject3
+#             wrapPython
+#             ;
+#         };
+#         installPhase = ''
+#           mkdir -p $out/bin $out/share/applications $out/share/doc/$pname
+#           cp networkmanager_dmenu $out/bin/
+#           cp networkmanager_dmenu.desktop $out/share/applications
+#           cp README.md $out/share/doc/$pname/
+#           cp config.ini.example $out/share/doc/$pname/
+#         '';
+#         postFixup = let
+#           inherit (pkgs.python3Packages) pygobject3;
+#         in ''
+#            makeWrapperArgs="\
+#           --prefix GI_TYPELIB_PATH : $GI_TYPELIB_PATH \
+#           --prefix PYTHONPATH : \"$(toPythonPath $out):$(toPythonPath ${pygobject3})\""
+#            wrapPythonPrograms
+#         '';
+#         meta = {
+#           description = "Manage NetworkManager connections with dmenu/rofi/wofi instead of nm-applet";
+#           homepage = "https://github.com/firecat53/networkmanager-dmenu";
+#           license = pkgs.lib.licenses.mit;
+#           maintainers = ["firecat53"];
+#           platforms = pkgs.lib.platforms.all;
+#         };
+#       };
+#     });
+#   };
+# }
