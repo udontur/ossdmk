@@ -31,7 +31,7 @@ Enter ```ossdmk``` in the terminal.
 > ```ossdmk``` can handle up to 3 decimal places.
 
 ## 💾 Demo
-Try it out without installing:
+Try it out first:
 ```sh
 $ nix shell github:udontur/ossdmk -c ossdmk
 ```
