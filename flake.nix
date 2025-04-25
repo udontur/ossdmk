@@ -4,7 +4,7 @@
   outputs =
     { self, nixpkgs }:
     {
-      defaultPackage.x86_64-linux =
+      default =
         # Notice the reference to nixpkgs here.
         with import nixpkgs {
           system = "x86_64-linux";
@@ -23,3 +23,4 @@
     };
 }
 
+#Package.x86_64-linux
