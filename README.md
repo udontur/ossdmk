@@ -16,17 +16,13 @@
 ```ossdmk``` is a command line tool that calculates your Ontario Secondary School Diploma marks using multiple marks, weights, and denominators in a fast and convenient way.
 
 ## 🛠️ Installation (Linux)
-1. Add the Nix flake to your ```flake.nix```:
+1. Add the Nix flake to your ```flake.nix``` input:
 ```nix
-inputs = {
-  ossdmk.url="github:udontur/ossdmk";
-};
+ossdmk.url="github:udontur/ossdmk";
 ```
 2. Add the package to your NixOS ```configuration.nix```:
 ```nix
-environment.systemPackages = with pkgs; [
-  inputs.ossdmk.default
-];
+inputs.ossdmk.default
 ```
 3. Then rebuild your configuration:
 ```sh
@@ -39,4 +35,7 @@ Enter ```ossdmk``` in the terminal.
 
 ## 💾 Demo
 ![](assets/demo.gif)
-nix shell github:udontur/ossdmk -c ossdmk
+Try it out without installing:
+```sh
+$ nix shell github:udontur/ossdmk -c ossdmk
+```
