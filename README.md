@@ -24,7 +24,7 @@ ossdmk.url="github:udontur/ossdmk";
 ```nix
 inputs.ossdmk.default
 ```
-3. Then rebuild your configuration.
+3. Rebuild your Nix configuration.
 ## 🔧 Usage
 Enter ```ossdmk``` in the terminal.
 > [!NOTE]
