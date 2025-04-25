@@ -24,10 +24,7 @@ ossdmk.url="github:udontur/ossdmk";
 ```nix
 inputs.ossdmk.default
 ```
-3. Then rebuild your configuration:
-```sh
-$ nixos-rebuild switch --flake ./
-```
+3. Then rebuild your configuration.
 ## 🔧 Usage
 Enter ```ossdmk``` in the terminal.
 > [!NOTE]
