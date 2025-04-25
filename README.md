@@ -34,8 +34,9 @@ Enter ```ossdmk``` in the terminal.
 > ```ossdmk``` can handle up to 3 decimal places.
 
 ## 💾 Demo
-![](assets/demo.gif)
 Try it out without installing:
 ```sh
 $ nix shell github:udontur/ossdmk -c ossdmk
 ```
+![](assets/demo.gif)
+
