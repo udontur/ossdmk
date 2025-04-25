@@ -28,7 +28,7 @@ environment.systemPackages = with pkgs; [
   inputs.ossdmk.default
 ];
 ```
-Then rebuild your configuration:
+3. Then rebuild your configuration:
 ```nix
 nixos-rebuild switch --flake ./
 ```
