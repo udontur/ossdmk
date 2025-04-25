@@ -6,7 +6,7 @@
     🧮 Ontario Secondary School Diploma (OSSD) Mark Calculator CLI Tool
     <br />
     <br />
-    <a href="https://github.com/udontur/ossd-mark-calculator/issues/new">Report Bug</a>
+    <a href="https://github.com/udontur/ossdmk/issues/new">Report Bug</a>
     ·
     <a href="https://github.com/udontur">Made with passion by Hadrian</a>
   </p>
