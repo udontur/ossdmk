@@ -1,11 +1,10 @@
 {
-  description = "A flake for building Hello World";
+  description = "Ontario Secondary School Diploma (OSSD) Mark Calculator CLI Tool";
   inputs.nixpkgs.url = "github:nixos/nixpkgs?ref=nixos-unstable";
   outputs =
     { self, nixpkgs }:
     {
       default =
-        # Notice the reference to nixpkgs here.
         with import nixpkgs {
           system = "x86_64-linux";
         };
@@ -22,5 +21,3 @@
         };
     };
 }
-
-#Package.x86_64-linux
