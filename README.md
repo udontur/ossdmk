@@ -29,8 +29,8 @@ environment.systemPackages = with pkgs; [
 ];
 ```
 3. Then rebuild your configuration:
-```nix
-nixos-rebuild switch --flake ./
+```sh
+$ nixos-rebuild switch --flake ./
 ```
 ## 🔧 Usage
 Enter ```ossdmk``` in the terminal.
