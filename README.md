@@ -22,7 +22,7 @@ ossdmk.url="github:udontur/ossdmk";
 ```
 2. Add the package to your NixOS ```configuration.nix```:
 ```nix
-inputs.ossdmk.default
+inputs.ossdmk.packages."${system}".default
 ```
 3. Rebuild your Nix configuration.
 ## 🔧 Usage

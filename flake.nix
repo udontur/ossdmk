@@ -3,8 +3,8 @@
   inputs.nixpkgs.url = "github:nixos/nixpkgs?ref=nixos-unstable";
   outputs =
     { self, nixpkgs }:
-    let
-      default =
+    {
+      packages.x86_64-linux.default =
         with import nixpkgs {
           system = "x86_64-linux";
         };
@@ -19,8 +19,5 @@
             install -D ./ossdmk $out/bin/ossdmk
           '';
         };
-    in
-    {
-      packages.x86_64-linux.default = default;
     };
 }
